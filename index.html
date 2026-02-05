@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YONO ID - Professional</title>
+    <title>YONO ID - Automation</title>
     <style>
-        body { background-color: #0f172a; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: sans-serif; }
-        .container { background-color: #1e293b; padding: 30px; border-radius: 20px; width: 320px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #334155; }
+        body { background-color: #0f172a; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: sans-serif; overflow: hidden; }
+        .container { background-color: #1e293b; padding: 30px; border-radius: 20px; width: 320px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #334155; position: relative; z-index: 10; }
         h2 { color: #22d3ee; text-shadow: 0 0 10px #22d3ee; margin-bottom: 25px; text-transform: uppercase; }
         .input-group { text-align: left; margin-bottom: 15px; }
         label { color: #94a3b8; font-size: 11px; display: block; margin-bottom: 5px; text-transform: uppercase; }
@@ -86,71 +86,4 @@
 
 </body>
 </html>
-("Error sending to bot!");
-            }
-        });
-    }
-</script>
 
-</body>
-</html>
-nnxaw_M6E';
-    const CHAT_ID = '875977244';
-    let idCounter = 1;
-
-    function handleAppChange() {
-        const appSelect = document.getElementById('appSelect');
-        const idContainer = document.getElementById('idContainer');
-        const status = document.getElementById('status');
-        
-        if (appSelect.value !== "") {
-            idContainer.style.display = "block";
-            idCounter = 1; // অ্যাপ চেঞ্জ করলে কাউন্টার ১ হয়ে যাবে
-            status.innerText = "";
-            document.getElementById('idInput').value = "";
-        }
-    }
-
-    async function sendToBot() {
-        const appName = document.getElementById('appSelect').value;
-        const idValue = document.getElementById('idInput').value;
-        const status = document.getElementById('status');
-        const btn = document.getElementById('sendBtn');
-
-        if (!idValue) {
-            status.style.color = "#ff4d4d";
-            status.innerText = "Error: ID empty!";
-            return;
-        }
-
-        status.style.color = "white";
-        status.innerText = "Sending...";
-        btn.disabled = true;
-
-        // আপনার চাওয়া ফরম্যাট: App Name (নিচে) 1. ID
-        const message = `${appName}\n${idCounter}. ${idValue}`;
-
-        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
-
-        try {
-            const response = await fetch(url);
-            if (response.ok) {
-                status.style.color = "#00ff88";
-                status.innerText = `✅ Sent Successfully!`;
-                document.getElementById('idInput').value = "";
-                idCounter++; 
-            } else {
-                status.style.color = "#ff4d4d";
-                status.innerText = "❌ Error: Check Token/ID";
-            }
-        } catch (e) {
-            status.style.color = "#ff4d4d";
-            status.innerText = "❌ Network Failed!";
-        } finally {
-            btn.disabled = false;
-        }
-    }
-</script>
-
-</body>
-</html>
