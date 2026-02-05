@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YONO ID - Professional</title>
+    <style>
+        body { background-color: #0f172a; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: sans-serif; }
+        .container { background-color: #1e293b; padding: 30px; border-radius: 20px; width: 320px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #334155; }
+        h2 { color: #22d3ee; text-shadow: 0 0 10px #22d3ee; margin-bottom: 25px; text-transform: uppercase; }
+        .input-group { text-align: left; margin-bottom: 15px; }
+        label { color: #94a3b8; font-size: 11px; display: block; margin-bottom: 5px; text-transform: uppercase; }
+        select, input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #334155; background-color: #262f3f; color: white; outline: none; box-sizing: border-box; }
+        #idSection, #sendBtn { display: none; margin-top: 15px; }
+        button { width: 100%; padding: 15px; border: none; border-radius: 12px; background: linear-gradient(90deg, #06b6d4, #3b82f6); color: white; font-weight: bold; cursor: pointer; }
+        #status { margin-top: 15px; color: #4ade80; font-size: 14px; display: none; font-weight: bold; }
+        .footer { margin-top: 25px; color: #fbbf24; font-weight: bold; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>YONO ID</h2>
+    <div class="input-group">
+        <label>SELECT APPLICATION</label>
+        <select id="appSelect" onchange="handleAppChange()">
+            <option value="" disabled selected>Choose App...</option>
+            <option value="YONOSLOT">YONOSLOT</option>
+            <option value="567SLOT">567SLOT</option>
+            <option value="MBM BET">MBM BET</option>
+        </select>
+    </div>
+
+    <div id="idSection" class="input-group">
+        <label>PASTE ANDROID ID</label>
+        <input type="text" id="userId" placeholder="Paste ID here...">
+    </div>
+
+    <button id="sendBtn" onclick="sendToBot()">SEND TO BOT</button>
+    <div id="status">✅ Sent Successfully!</div>
+    <div class="footer">POKEMON</div>
+</div>
+
+<script>
+    let appCounts = { "YONOSLOT": 0, "567SLOT": 0, "MBM BET": 0 };
+    let lastSelectedApp = "";
+
+    function handleAppChange() {
+        const currentApp = document.getElementById('appSelect').value;
+        if (lastSelectedApp !== currentApp) {
+            appCounts[currentApp] = 0; 
+            lastSelectedApp = currentApp;
+        }
+        document.getElementById('idSection').style.display = "block";
+        document.getElementById('sendBtn').style.display = "block";
+    }
+
+    async function sendToBot() {
+        const botToken = "8288004550:AAFFrs4U5vEbhnd3yVRnO_mEpOnnxaw_M6E";
+        const chatId = "875977244";
+        
+        const appName = document.getElementById('appSelect').value;
+        const userId = document.getElementById('userId').value;
+        const status = document.getElementById('status');
+
+        if(userId.trim() === "") return alert("Please paste an ID!");
+
+        appCounts[appName]++;
+        let currentCount = appCounts[appName];
+
+        const message = `<b>${appName}</b>\n${currentCount}. <code>${userId}</code>`;
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}&parse_mode=HTML`;
+
+        try {
+            const response = await fetch(url);
+            if(response.ok) {
+                status.style.display = "block";
+                document.getElementById('userId').value = ""; 
+                setTimeout(() => { status.style.display = "none"; }, 3000);
+            }
+        } catch (error) {
+            alert("Error! Check internet.");
+        }
+    }
+</script>
+
+</body>
+</html>
+("Error sending to bot!");
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
+nnxaw_M6E';
+    const CHAT_ID = '875977244';
+    let idCounter = 1;
+
+    function handleAppChange() {
+        const appSelect = document.getElementById('appSelect');
+        const idContainer = document.getElementById('idContainer');
+        const status = document.getElementById('status');
+        
+        if (appSelect.value !== "") {
+            idContainer.style.display = "block";
+            idCounter = 1; // অ্যাপ চেঞ্জ করলে কাউন্টার ১ হয়ে যাবে
+            status.innerText = "";
+            document.getElementById('idInput').value = "";
+        }
+    }
+
+    async function sendToBot() {
+        const appName = document.getElementById('appSelect').value;
+        const idValue = document.getElementById('idInput').value;
+        const status = document.getElementById('status');
+        const btn = document.getElementById('sendBtn');
+
+        if (!idValue) {
+            status.style.color = "#ff4d4d";
+            status.innerText = "Error: ID empty!";
+            return;
+        }
+
+        status.style.color = "white";
+        status.innerText = "Sending...";
+        btn.disabled = true;
+
+        // আপনার চাওয়া ফরম্যাট: App Name (নিচে) 1. ID
+        const message = `${appName}\n${idCounter}. ${idValue}`;
+
+        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
+
+        try {
+            const response = await fetch(url);
+            if (response.ok) {
+                status.style.color = "#00ff88";
+                status.innerText = `✅ Sent Successfully!`;
+                document.getElementById('idInput').value = "";
+                idCounter++; 
+            } else {
+                status.style.color = "#ff4d4d";
+                status.innerText = "❌ Error: Check Token/ID";
+            }
+        } catch (e) {
+            status.style.color = "#ff4d4d";
+            status.innerText = "❌ Network Failed!";
+        } finally {
+            btn.disabled = false;
+        }
+    }
+</script>
+
+</body>
+</html>
