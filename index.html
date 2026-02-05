@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YONO ID - Automation</title>
+    <title>YONO ID - Professional</title>
     <style>
         body { background-color: #0f172a; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: sans-serif; overflow: hidden; }
         .container { background-color: #1e293b; padding: 30px; border-radius: 20px; width: 320px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #334155; position: relative; z-index: 10; }
@@ -56,15 +56,18 @@
     }
 
     async function sendToBot() {
+        // Apnar dewa Token o Chat ID recheck kora hoyeche
         const botToken = "8288004550:AAFFrs4U5vEbhnd3yVRnO_mEpOnnxaw_M6E";
         const chatId = "875977244";
         
         const appName = document.getElementById('appSelect').value;
         const userId = document.getElementById('userId').value;
         const status = document.getElementById('status');
+        const btn = document.getElementById('sendBtn');
 
         if(userId.trim() === "") return alert("Please paste an ID!");
 
+        btn.disabled = true;
         appCounts[appName]++;
         let currentCount = appCounts[appName];
 
@@ -77,13 +80,18 @@
                 status.style.display = "block";
                 document.getElementById('userId').value = ""; 
                 setTimeout(() => { status.style.display = "none"; }, 3000);
+            } else {
+                alert("Bot Error! Check Token/ID.");
             }
         } catch (error) {
-            alert("Error! Check internet.");
+            alert("Network Error!");
+        } finally {
+            btn.disabled = false;
         }
     }
 </script>
 
 </body>
 </html>
+
 
